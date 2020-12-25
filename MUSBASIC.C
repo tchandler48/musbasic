@@ -5844,7 +5844,7 @@ void do_WDo()
 
 /* bxbasic : Output.c : alpha version.20.3.1 */
 /* Copyright:(c) sarbayo, 2001-2011          */
-/* Modified T. Chandler CMSBASIC - cmsbout.c */
+/* Modified T. Chandler MUSBASIC - musbout.c */
 
 
 void set_TabNl(int ch)
@@ -6237,11 +6237,11 @@ char *value2strng(double value)
 }
 /*------ end value2strng -------*/
 
-/* cmsbasic : Rdparser.c : alpha version.20.3.1 */
+/* bxbasic : Rdparser.c : alpha version.20.3.1  */
 /* Copyright:(c) sarbayo, 2001-2011             */
 /* special credits to: Jack Crenshaw's:
    "How to Build a Compiler"                    */
-/* Modified T. Chandler CMSBASIC - CMSBRDP.c    */
+/* Modified T. Chandler MUSBASIC - MUSBRDP.c    */
 
 
 double rdp_main()		
@@ -7528,7 +7528,8 @@ double asc_2_dbl()
 
 /*
 double get_LEN()
-{   char ch, varname[VAR_NAME];          
+{   
+    char ch, varname[VAR_NAME];          
     int pi, ndx, len, strnglen=0;        
     int type, indx, offset, nDims;
     int *Subscripts;
@@ -7620,11 +7621,11 @@ double get_LEN()
 
 /*
 double get_LOC()
-{   int ndx, maxfiles=(IOARRAY-1), x=line_ndx, ab_code=30;
+{   
+    int ndx, maxfiles=(IOARRAY-1), x=line_ndx, ab_code=30;
     long fil_rcrd;                
     double value;
     FILE *handle;
-
 
     value = Factor();                        
     ndx = (int) value;
@@ -7645,11 +7646,11 @@ double get_LOC()
 
 /*
 double get_LOF()
-{   int ndx, maxfiles=(IOARRAY-1), x=line_ndx, ab_code=31;
+{   
+    int ndx, maxfiles=(IOARRAY-1), x=line_ndx, ab_code=31;
     long offset;
     double value;
     FILE *handle;
-
 
     value = Factor();                         
     ndx = (int) value;
@@ -7671,7 +7672,8 @@ double get_LOF()
 
 /*
 double get_CVD()
-{   double value;        
+{   
+    double value;        
                         
 
     value = Factor();
@@ -7684,7 +7686,7 @@ double get_CVD()
 
 /* bxbasic : Strings.c : alpha version.20.3.1 */
 /* Copyright:(c) sarbayo, 2001-2011           */
-/* Modified T. Chandler CMSBASIC - CMSBSTRG.c */
+/* Modified T. Chandler MUSBASIC              */
 
 
 void dim_gstr(char *varname)
@@ -8283,7 +8285,8 @@ void strvar_assgn()
 
 
 void dim_strarry(char *varname, int len, int type)
-{   int pi, ii, indx, param, subscript, ab_code=34, x=line_ndx;
+{   
+    int pi, ii, indx, param, subscript, ab_code=34, x=line_ndx;
     unsigned multiplier, size;
     char ch;
 
@@ -8523,8 +8526,6 @@ void redim_strarry(char *varname)
 
 }
 /*------- end redim_strarry -------*/
-
-
 
 void erase_strArray(char *varname)
 {   int indx, params, ii, multiplier, subscript;
