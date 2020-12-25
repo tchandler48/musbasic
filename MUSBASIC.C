@@ -785,7 +785,7 @@ void parser()
 
 /* bxbasic : Arrays.c : alpha version.20.3.1 */
 /* Copyright:(c) sarbayo, 2001-2011          */
-/* Modified T.Chandler CMSBASIC - arrays.c   */
+/* Modified T.Chandler MUSBASIC - musbarr.c  */
 
 /* variable types:
     int    = no symbol,
@@ -800,8 +800,6 @@ void parser()
     double = #,
     string = $
 */
-
-#include "MUSBPROT.h"
 
 void do_dim()
 {   
@@ -1095,7 +1093,6 @@ void dim_dblarry(char *varname, int len, int type)
     /* get_digit Stop */
     e_pos = pi;
   }
-
   dblArry[dArryCnt].elem = malloc(multiplier * sizeof(double));
   dArryCnt++;					
 }
@@ -1688,9 +1685,9 @@ double let_dblarray(char *varname)
 }
 /*-------- end let_dblarray --------*/
 
-/* cmsbasic : error.c : alpha version.20.3.1 */
+/* bxbasic : error.c : alpha version.20.3.1  */
 /* Copyright:(c) sarbayo, 2001-2011          */
-/* Modified T.Chandler CMSBASIC - error.c    */
+/* Modified T.Chandler MUSBASIC - musberr.c  */
 
 void a_bort(int code,int line_ndx)
 {
@@ -2048,28 +2045,6 @@ void a_bort(int code,int line_ndx)
       printf("%s", p_string);
       break;
   }
- 
-/*    
-  int ii;
-
-  printf("\n");
-  for(ii = (subCnt-1); ii >= 0; ii--)
-  {
-    printf("%d, %s\n", ii, SubR[ii].SubName);
-  }
-  printf("\nvar count=%d\nactive subs=%d\n\n", glb_vct, ActvSubs);
-*    exit(1); * 
-
-  if(glb_vct > 0)
-  {
-    printf("\nloop\n");
-    for(ii = (glb_vct - 1); ii >= 0; ii--)
-    {
-      printf("%d, %s, %d\n", ii, Gtbl[ii].Nam, Gtbl[ii].Int);
-    }
-  }
-  exit(1);
-*/
 }
 /*----------end a_bort -----------*/
 
@@ -2189,9 +2164,9 @@ void err_hndlr(int ab_code, int x, int mssg, int p1, int p2)
   }
 }
 
-/* cmsbasic : Fileio.c : alpha version.20.3.1 */
+/* bxbasic : Fileio.c : alpha version.20.3.1  */
 /* Copyright:(c) sarbayo, 2001-2011           */
-/* Modified T. Chandler - CMSBASIC fileio.c   */
+/* Modified T. Chandler - MUSBASIC fileio.c   */
 
 
 void reset_handle(int ndx)
@@ -3237,51 +3212,50 @@ void do_put()
 
 
 void lod_bffr(int ndx, int len)
-{   char temp[VAR_NAME], ch;
-    int pi, ii=0, indx=0, cnt, bfr_len;
-    long fil_rcrd, tmp_rcrd;
-    double this_rcrd;
-    FILE *handle;
+{   
+  char temp[VAR_NAME], ch;
+  int pi, ii=0, indx=0, cnt, bfr_len;
+  long fil_rcrd, tmp_rcrd;
+  double this_rcrd;
+  FILE *handle;
 
+  if(fld_bffr[ndx].flag == 0) 	     
+  {
+    bfr_len = fld_bffr[ndx].bfr_size;
+    memset(fld_bffr[ndx].f_bffr, 32, bfr_len);  
+    fld_bffr[ndx].f_bffr[bfr_len] = '\0';
+  }
+  else
+  {
+    cnt = fld_bffr[ndx].fld_count;    
+    fld_bffr[ndx].f_bffr[0] = '\0';
 
-    if(fld_bffr[ndx].flag == 0) 	     
+    for(; ii < cnt; ii++)
     {
-        bfr_len = fld_bffr[ndx].bfr_size;
-        memset(fld_bffr[ndx].f_bffr, 32, bfr_len);  
-        fld_bffr[ndx].f_bffr[bfr_len] = '\0';
+      indx = 0;
+      strcpy(temp, fld_bffr[ndx].str_name[ii]);
+      while((ndx < glb_vct) && (strcmp(Gtbl[indx].Nam, temp) != 0))
+      {
+        indx++;
+      }
+      strcat(fld_bffr[ndx].f_bffr, Gtbl[indx].Str);
     }
-    else
-    {
-        cnt = fld_bffr[ndx].fld_count;    
-        fld_bffr[ndx].f_bffr[0] = '\0';
+  }
 
-        for(; ii < cnt; ii++)
-        {
-            indx = 0;
-            strcpy(temp, fld_bffr[ndx].str_name[ii]);
-
-        while((ndx < glb_vct) && (strcmp(Gtbl[indx].Nam, temp) != 0))
-            {
-                indx++;
-            }
-            strcat(fld_bffr[ndx].f_bffr, Gtbl[indx].Str);
-        }
-    }
-
-    pi = e_pos;
-    /* get_alnum Start */
+  pi = e_pos;
+  /* get_alnum Start */
+  ch = p_string[pi];
+  while((isalnum(ch) == 0) && (pi < len))
+  {
+    pi++;
     ch = p_string[pi];
-    while((isalnum(ch) == 0) && (pi < len))
-    {
-        pi++;
-        ch = p_string[pi];
-    }
-    /* get_alnum Stop */
-    if(pi < len)                    
-    {
-        e_pos = pi;
-        this_rcrd = get_avalue();
-        fil_rcrd = (long) this_rcrd;
+  }
+  /* get_alnum Stop */
+  if(pi < len)                    
+  {
+    e_pos = pi;
+    this_rcrd = get_avalue();
+    fil_rcrd = (long) this_rcrd;
     }
     else                           
     {
@@ -3304,8 +3278,6 @@ void lod_bffr(int ndx, int len)
     fld_bffr[ndx].flag = 0;               
 }
 /*------- end lod_bffr ----------*/
-
-
 
 void do_get()
 {   int len, pi, ndx;
@@ -3336,8 +3308,6 @@ void do_get()
     fil_bffr(ndx,len);
 }
 /*------- end do_get ----------*/
-
-
 
 void fil_bffr(int ndx, int len)
 {   char varname[VAR_NAME], ch;
@@ -3420,8 +3390,6 @@ void fil_bffr(int ndx, int len)
 }
 /*------- end fil_bffr ----------*/
 
-
-
 void do_kill()
 {
     get_pnam();    
@@ -3434,7 +3402,7 @@ void do_kill()
 
 /* bxbasic : Getinput.c : alpha version.20.3.1 */
 /* Copyright:(c) sarbayo, 2001-2011            */
-/* Modified T. Chandler CMSBASIC getinput.c    */
+/* Modified T. Chandler MUSBASIC getinput.c    */
 
 void get_lninput()
 {   
@@ -5491,7 +5459,7 @@ void tmp_byte(int ii)
 
 /* bxbasic : Loops.c : alpha version.20.3.1   */
 /* Copyright:(c) sarbayo, 2001-2011           */
-/* Modified T. Chandler CMSBASIC - cmsloops.c */
+/* Modified T. Chandler MUSBASIC - musloops.c */
 
 
 void go_to()
