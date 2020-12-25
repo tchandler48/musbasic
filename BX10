@@ -1,0 +1,3 @@
+/parm MUSBASIC BX10.BAS
+/inc xmwatc
+MUSBASIC n(MUSBASIC.LMOD) lcparm
