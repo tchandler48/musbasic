@@ -275,7 +275,6 @@
 
 const int _staksize=50*1024;  /* set stack size to 70K bytes */
 
-
 /* --- declare constants --- */
 #define BUFSIZE     256
 #define TOKEN_LEN   21
@@ -341,9 +340,6 @@ const int _staksize=50*1024;  /* set stack size to 70K bytes */
      int sw_flag=0;            /* Switch/Case instance flag     */
      int iswitch;              /* Switch/Case: test value       */
                            
-
-        /* ----------- end global vars ------------ */
-
 
 /*--------------------- FILE VARIABLES ---------------------*/
 
@@ -1982,45 +1978,24 @@ void a_bort(int code,int line_ndx)
       break;
 
     case 55:
-      printf("\nDraw error: in program line: %d.\n",(line_ndx+1));
-      printf("%s %s", t_holder, p_string);
-      printf("\nDid not find window name.\ncode(%d)\n", code);
       break;
 
     case 56:
-      printf("\nDraw Box error: in program line: %d.\n",(line_ndx+1));
-      printf("BOX %s", p_string);
-      printf("\nNo gui window created yet.\ncode(%d)\n", code);
       break;
 
     case 57:
-      printf("\nDraw Text error: in program line: %d.\n",(line_ndx+1));
-      printf("TEXT %s", p_string);
-      printf("\nNo gui window created yet.\ncode(%d)\n", code);
       break;
 
     case 58:
-      printf("\nFONT error: in program line: %d.\n",(line_ndx+1));
-      printf("FONT %s", p_string);
-      printf("\nNo gui window created yet.\ncode(%d)\n", code);
       break;
 
     case 78:
-      printf("\nBKMODE error: in program line: %d.\n",(line_ndx+1));
-      printf("BKMODE %s", p_string);
-      printf("\nNo gui window created yet.\ncode(%d)\n", code);
       break;
 
     case 79:
-      printf("\nBKMODE error: in program line: %d.\n",(line_ndx+1));
-      printf("BKMODE %s", p_string);
-      printf("\nMode type not found.\ncode(%d)\n", code);
       break;
 
     case 97:
-      printf("\nSYSMETRIC error: in program line: %d.\n",(line_ndx+1));
-      printf("%s", p_string);
-      printf("\nMetric parameter not found.\ncode(%d)\n", code);
       break;
 
     case 131:
